@@ -1,3 +1,4 @@
+import notificationRoutes from './routes/notificationRoutes';
 import express from 'express';
 import dotenv from 'dotenv';
 import { json } from 'body-parser';
@@ -23,6 +24,7 @@ app.use('/api/challenges', challengeRoutes);
 app.use('/api/rewards', rewardRoutes);
 app.use('/api/user-challenges', userChallengeRoutes);
 app.use('/api/user-rewards', userRewardRoutes);
+app.use('/api', notificationRoutes);
 
 // Health check route
 app.get('/api/health', (_req, res) => {
