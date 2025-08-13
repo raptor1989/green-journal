@@ -1,45 +1,90 @@
 import React from 'react';
 import { useActiveChallenges, useJoinChallenge, useCompleteChallenge } from '../utils/queries';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../store/notificationSlice';
 
 const ChallengesSection: React.FC = () => {
-  const { data, isLoading } = useActiveChallenges();
-  const joinChallenge = useJoinChallenge();
-  const completeChallenge = useCompleteChallenge();
+    const { data, isLoading } = useActiveChallenges();
+    const joinChallenge = useJoinChallenge();
+    const completeChallenge = useCompleteChallenge();
+    const dispatch = useDispatch();
 
-  if (isLoading) return <div>Loading challenges...</div>;
+    React.useEffect(() => {
+        if (joinChallenge.isSuccess) {
+            dispatch(
+                addNotification({
+                    id: Date.now().toString(),
+                    message: 'Challenge joined!',
+                    type: 'success'
+                })
+            );
+        }
+        if (joinChallenge.isError) {
+            dispatch(
+                addNotification({
+                    id: Date.now().toString(),
+                    message: 'Failed to join challenge',
+                    type: 'error'
+                })
+            );
+        }
+    }, [joinChallenge.isSuccess, joinChallenge.isError, dispatch]);
 
-  const challenges = (data as any)?.data ?? [];
+    React.useEffect(() => {
+        if (completeChallenge.isSuccess) {
+            dispatch(
+                addNotification({
+                    id: Date.now().toString(),
+                    message: 'Challenge completed!',
+                    type: 'success'
+                })
+            );
+        }
+        if (completeChallenge.isError) {
+            dispatch(
+                addNotification({
+                    id: Date.now().toString(),
+                    message: 'Failed to complete challenge',
+                    type: 'error'
+                })
+            );
+        }
+    }, [completeChallenge.isSuccess, completeChallenge.isError, dispatch]);
 
-  return (
-    <div className="bg-white rounded p-4 shadow space-y-2">
-      <h3 className="font-bold text-green-700 mb-2">Active Challenges</h3>
-      {challenges.length === 0 && <div>No active challenges.</div>}
-      {challenges.map((ch: any) => (
-        <div key={ch.id} className="flex items-center justify-between border-b py-2">
-          <div>
-            <div className="font-semibold">{ch.title}</div>
-            <div className="text-xs text-gray-500">{ch.description}</div>
-          </div>
-          <div className="flex gap-2">
-            <button
-              className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
-              onClick={() => joinChallenge.mutate(ch.id)}
-              disabled={joinChallenge.status === 'pending'}
-            >
-              Join
-            </button>
-            <button
-              className="bg-green-600 text-white px-2 py-1 rounded text-xs"
-              onClick={() => completeChallenge.mutate(ch.id)}
-              disabled={completeChallenge.status === 'pending'}
-            >
-              Complete
-            </button>
-          </div>
+    if (isLoading) return <div>Loading challenges...</div>;
+
+    const challenges = (data as any)?.data ?? [];
+
+    return (
+        <div className="bg-white rounded p-4 shadow space-y-2">
+            <h3 className="font-bold text-green-700 mb-2">Active Challenges</h3>
+            {challenges.length === 0 && <div>No active challenges.</div>}
+            {challenges.map((ch: any) => (
+                <div key={ch.id} className="flex items-center justify-between border-b py-2">
+                    <div>
+                        <div className="font-semibold">{ch.title}</div>
+                        <div className="text-xs text-gray-500">{ch.description}</div>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            className="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                            onClick={() => joinChallenge.mutate(ch.id)}
+                            disabled={joinChallenge.status === 'pending'}
+                        >
+                            Join
+                        </button>
+                        <button
+                            className="bg-green-600 text-white px-2 py-1 rounded text-xs"
+                            onClick={() => completeChallenge.mutate(ch.id)}
+                            disabled={completeChallenge.status === 'pending'}
+                        >
+                            Complete
+                        </button>
+                    </div>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default ChallengesSection;

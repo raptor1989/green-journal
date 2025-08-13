@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import AuthPage from './components/AuthPage';
 
-import NavBar from "./components/NavBar";
-import CalendarPage from "./pages/CalendarPage";
-import MarketplacePage from "./pages/MarketplacePage";
-import CommunityPage from "./pages/CommunityPage";
-import ProfilePage from "./pages/ProfilePage";
+import NavBar from './components/NavBar';
+import CalendarPage from './pages/CalendarPage';
+import MarketplacePage from './pages/MarketplacePage';
+import CommunityPage from './pages/CommunityPage';
+import ProfilePage from './pages/ProfilePage';
 
-import MapPage from "./pages/MapPage";
-import DashboardContainer from "./components/DashboardContainer";
+import MapPage from './pages/MapPage';
+import DashboardContainer from './components/DashboardContainer';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, loading } = useAuth();

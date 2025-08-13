@@ -8,10 +8,6 @@ router.get('/me', authenticateFirebaseJWT, userChallengeController.getMyUserChal
 router.post('/:id/join', authenticateFirebaseJWT, userChallengeController.joinUserChallenge);
 router.get('/', authenticateFirebaseJWT, userChallengeController.getMyUserChallenges);
 router.post('/', authenticateFirebaseJWT, userChallengeController.createUserChallenge);
-router.post(
-  '/:id/complete',
-  authenticateFirebaseJWT,
-  userChallengeController.completeUserChallenge,
-);
+router.post('/:id/complete', authenticateFirebaseJWT, userChallengeController.completeUserChallenge);
 
 export default router;

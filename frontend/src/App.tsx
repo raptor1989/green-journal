@@ -1,20 +1,15 @@
 import React from 'react';
 
-
-
-
-import { ToastProvider } from "./contexts/ToastContext";
-import AppRoutes from "./AppRoutes";
+import Toast from './components/Toast';
+import AppRoutes from './AppRoutes';
 
 function App() {
     return (
-        <ToastProvider>
+        <>
+            <Toast />
             <AppRoutes />
-        </ToastProvider>
+        </>
     );
 }
 
 export default App;
-
-
-
