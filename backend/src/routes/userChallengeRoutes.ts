@@ -1,10 +1,17 @@
 import { Router } from 'express';
 import * as userChallengeController from '../controllers/userChallengeController';
-import { authenticateJWT } from '../middlewares/auth';
+import { authenticateFirebaseJWT } from '../middlewares/firebaseAuth';
 
 const router = Router();
 
-router.get('/', authenticateJWT, userChallengeController.getMyUserChallenges);
-router.post('/', authenticateJWT, userChallengeController.createUserChallenge);
+router.get('/me', authenticateFirebaseJWT, userChallengeController.getMyUserChallenges);
+router.post('/:id/join', authenticateFirebaseJWT, userChallengeController.joinUserChallenge);
+router.get('/', authenticateFirebaseJWT, userChallengeController.getMyUserChallenges);
+router.post('/', authenticateFirebaseJWT, userChallengeController.createUserChallenge);
+router.post(
+  '/:id/complete',
+  authenticateFirebaseJWT,
+  userChallengeController.completeUserChallenge,
+);
 
 export default router;

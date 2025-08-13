@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import * as userRewardController from '../controllers/userRewardController';
-import { authenticateJWT } from '../middlewares/auth';
+import { authenticateFirebaseJWT } from '../middlewares/firebaseAuth';
 
 const router = Router();
 
-router.get('/', authenticateJWT, userRewardController.getMyUserRewards);
-router.post('/', authenticateJWT, userRewardController.claimReward);
+router.get('/', authenticateFirebaseJWT, userRewardController.getMyUserRewards);
+router.post('/', authenticateFirebaseJWT, userRewardController.claimReward);
 
 export default router;
