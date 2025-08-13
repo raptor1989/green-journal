@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.8.2",
-    "express-rate-limit": "^8.0.1",
-    "helmet": "^8.1.0",
-    "react-redux": "^9.2.0",
-    "xss-clean": "^0.1.4"
-  }
-}
